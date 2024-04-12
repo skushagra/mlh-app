@@ -1,0 +1,118 @@
+.email-log {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: #cacaca;
+  background-color: #1e1e1e;
+  padding: 5px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.email-log:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #cacaca;
+}
+
+.reg-user-inputs {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: #cacaca;
+  background-color: #1e1e1e;
+  padding: 5px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.reg-user-inputs:focus {
+  outline: none;
+}
+
+.sett-user-btn {
+  margin-top: 20px;
+  font-family: Lexend;
+  font-weight: 900;
+  width: 40%;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  border: 1px solid #cacaca;
+}
+
+.blog-holder {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90%;
+  padding: 50px 50px 50px 50px;
+  border-radius: 5px;
+  border: 1px solid #cacaca;
+}
+
+.blog {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  color: #cacaca;
+  padding: 5px;
+  border: 1px solid transparent;
+}
+
+.blog-pill-rm {
+  text-decoration: none;
+  background-color: #1e1e1e;
+  color: #c9ae76;
+  font-size: 15px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  border: 1px solid #c9ae76;
+  margin-right: 5px;
+}
+
+.blog-pill-rm:hover {
+  color: #ecbc5c;
+  border: 1px solid #ecbc5c;
+}
+
+.blog-pill-ub {
+  text-decoration: none;
+  background-color: #1e1e1e;
+  color: #70ec27;
+  font-size: 15px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  border: 1px solid #70ec27;
+  margin-right: 5px;
+}
+
+.blog-pill-ub:hover {
+  color: #70ec27;
+  border: 1px solid #70ec27;
+}
+
+.blog-pill-date {
+  text-decoration: none;
+  background-color: #1e1e1e;
+  color: #f84444;
+  font-size: 15px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+  border: 1px solid #f84444;
+  margin-right: 5px;
+}
+
+.blog-pill-date:hover {
+  color: #f84444;
+  border: 1px solid #f84444;
+}

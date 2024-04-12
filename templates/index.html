@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+
+<body>
+
+  <div class="intro">
+      <h2>Welcome <input type="text" class="name-input" id="name-input" value="{{username}}" placeholder="Full Name"> <span id="f-name"></span> </h2>
+
+      <br>
+      Service Status &nbsp;&nbsp;
+      {% if sr == "True" %}
+                <label class="toggle-switch">
+                    <input id="tss" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label>
+      {% else %}
+                <label class="toggle-switch">
+                    <input id="tss" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label>
+      {% endif %} 
+
+      {% if sr == "True" %}
+                <code>emails are being fetched and printed.</code>
+      {% else %}
+                <code>emails are neither being fetched, nor being printed.</code>
+      {% endif %} 
+
+      
+
+
+      <br><br>
+      <p class="intro-desc">
+        
+        The Web Mail Printer is a program that enables users to automate printing by sending documents required to be printed to an email address after which a computer program automatically prints the required documents based on user generated rules.
+        <br><br>
+        Your are running <code>version {{current_version}}</code> released on <code>{{current_version_release}}</code> and was last updated on <code>{{last_update_date}}</code>. {% if auto_update_pvm == "True" %}Your software is set to automatically update to the latest version.{% else %}Your software is set not to automatically update to the latest version.{% endif %}
+        <br><br>
+        You can change your settings by clicking on the<code> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#c9ae76" class="bi bi-gear" viewBox="0 0 16 16">
+          <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+          <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+        </svg> </code> button on the top right corner of the screen.
+      </p>
+
+      <br><br>
+
+      {% if doblogs %}
+        <h2 style="font-weight: 900;">Web Mail Printer Blogs</h2>
+      {% endif %}
+      <br>
+      {% for blog in blogs %}
+        <div class="blog-holder">
+          <div class="blog">
+            <div class="blog-desc">
+              <h3>{{blog[0]}}</h3>
+              <p>{{blog[1]}}</p>
+              <a class="blog-pill-ub" href="{{blog[3]}}" target="_blank">uploaded by {{blog[2]}}</a>
+              <a class="blog-pill-date" target="_blank">uploaded on {{blog[4]}}</a>
+              <a class="blog-pill-rm" href="{{blog[5]}}" target="_blank">Read More</a>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+  </div>
+  <script>
+
+    $("#tss").on("change", function(){
+            var sfs = document.getElementById("tss").checked;
+            $.ajax({
+              type: "POST",
+              url: "/startstopservice",
+              data: {
+                new_status: sfs
+              },
+              success: (response) => {
+                window.location.reload();
+              }
+            });
+        });
+
+      var input = document.getElementById("name-input");
+      var pvmdesc = document.getElementById("pvm-desc");
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          fname = document.getElementById("name-input").value;
+          if (fname != "") {
+            input.style.display = "none";
+            document.getElementById("f-name").innerHTML += fname;
+
+            formData = {
+              full_name : fname,
+            };
+
+            $.ajax({
+              type: "POST",
+              url: "/setfullname",
+              data: formData,
+              success: (response) => {
+                console.log(response);
+              }
+            });
+
+          }
+        }
+      });
+  </script>
+</body>
+
+
+{% endblock content %}

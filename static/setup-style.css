@@ -1,0 +1,94 @@
+* {
+    background-color: #1e1e1e;
+    color: #cacaca;
+    font-family: Montserrat;
+    font-weight: 600;
+}
+
+.webnav {
+    padding-top: 15px;
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+.intro_cnt {
+    padding-top: 30px;
+    padding-left: 30px;
+    text-align: justify;
+}
+
+.intro_desc {
+    padding-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-family: Lexend;
+    font-weight: 500;
+}
+
+.req-list {
+    padding-left: 30px;
+    padding-right: 15px;
+    font-family: Lexend;
+    font-weight: 500;
+}
+
+.bs-btn {
+    padding: 6px 12px;
+    margin-bottom: 0;
+    width: max-content;
+    color: #cacaca;
+    border: 1px solid #cacaca;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border-radius: 15px;
+    height: 40px;
+}
+
+.bs-btn:hover {
+    color: #bdb9b9;
+    border: 1px solid #b1afaf;
+}
+
+.f-name-input, .email-input {
+    width: 80%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #cacaca;
+    padding-left: 5px;
+    font-family: Montserrat;
+    font-weight: 600;
+    outline: none;
+}
+
+.btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23cacaca' d='M9.354 8l4.823-4.823a1.2 1.2 0 0 0-1.697-1.697L7.657 6.303 2.834 1.48A1.2 1.2 0 0 0 1.138 3.177L6.961 8 1.138 13.823a1.2 1.2 0 1 0 1.697 1.697L7.657 9.697l4.823 4.823a1.2 1.2 0 0 0 1.697-1.697L9.354 8z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+
+.policy-acceptance {
+    text-decoration: none;
+    font-size: 15px;
+    margin-right: 20px;
+    color: #c9ae76
+}
+
+.policy-acceptance:hover {
+    color: #99855c
+}
+
+.li-item {
+    font-size: 15px;
+}

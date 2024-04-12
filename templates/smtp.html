@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %}SMTP Settings{% endblock title %}
+
+{% block bcpage %}SMTP{% endblock bcpage %}
+
+{% block content %}
+
+<body>
+
+  <style>
+    .highlight {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+
+
+    <div class="intro">
+  
+      <h3>SMTP server settings</h3>
+      <br>
+      <p class="intro-desc">
+       Web Mail Printer connects to your email providers SMTP server to send user configured emails for printing notifications and logs. <br>
+       Below are the <code>server</code>, <code>email</code>, <code>port</code> and <code>password</code> for your SMTP server. You can update these settings by entering new values and clicking the update button.
+      </p>
+      <br>
+  
+      <div class="form-cnt">
+        <div class="address-cnt">
+          <input type="text" class="address-input" placeholder="SMTP Server Address" value="{{ssa}}" id="add-inp">
+        </div>
+        <br><br>
+    
+        <div class="email-cnt">
+          <input type="text" class="mail-input" placeholder="SMTP Server Email" value="{{sse}}" id="email-inp">
+        </div>
+        <br><br>
+
+        <div class="port-cnt">
+            <input type="text" class="port-input" placeholder="SMTP Server PORT" value="{{ssport}}" id="port-inp">
+        </div>
+        <br><br>
+    
+        <div class="password-cnt">
+          <input class="password-input" type="password" id="password-input" placeholder="SMTP Password" value="{{sspass}}"><br>
+          <label class="show-pass-cnt">
+            <input type="checkbox" id="show-password-checkbox">&nbsp;&nbsp;&nbsp;
+            Show Password
+          </label>
+        </div>
+    
+        <br><br>
+    
+        <button class="btn btn-success update-smtp-btn" id="update-smtp-btn">Update SMTP</button>
+      </div>
+  
+      <br><br><br><br>
+      <h3>Notification HTML</h3>
+      <br>
+      <p class="intro-desc">
+        You can customise the notification HTML that is sent to the user when they print a document. The HTML editor below supports general variables like user email, number of atttachments etc. <br>
+        The editor supports some standard variables given below. You can use these variables in the HTML editor and they will be replaced by corresponding variables values.<br>
+        Edit the HTML for the notification email below or <code id="rev-smtp-to-def-format">revert to default format</code>.
+
+        <table class="table">
+            <th>Variable Name</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td><code>||user_email||</code></td>
+            <td>The email of the user who printed the document. If user is regietered, automatically name will be used.</td>
+          </tr>
+          <tr>
+            <td><code>||num_attachments||</code></td>
+            <td> The number of attachments that the user printed.</td>
+          </tr>
+          <tr>
+            <td><code>||queue_length||</code></td>
+            <td>Documents for printing before the users documents</td>
+          </tr>
+          <tr>
+            <td><code>||avg_job_duration||</code></td>
+            <td>Average time required to print one document</td>
+          </tr>
+          <tr>
+            <td><code>||estimated_time||</code></td>
+            <td>Estimated time to print the users documents</td>
+          </tr>
+          <tr>
+            <td><code>||current_time||</code></td>
+            <td>The current date and time</td>
+          </tr>
+        </table>
+      </p>
+      <br>
+      <textarea id="html_text_area" style="width: 80%; height: 80vh; border: 1px solid #cacaca;">{{notification_html}}</textarea>
+      <br><br>
+      
+      <button class="btn btn-success update-smtp-btn" id="update-notify-code-btn" style="width: 20%;">Update Notification HTML</button>
+      <br><br><br>
+
+    </div>
+  
+    <script>
+    $("#update-notify-code-btn").click(() => {
+      $.ajax({
+        url: "/dbexe-update",
+        type: "POST",
+        data: {
+          changing: 'smtp-notify-code',
+          updater: $("#html_text_area").val(),
+        },
+        success: (response) => {
+          location.reload();
+        }
+      });
+    });
+
+      
+    const rstd = document.getElementById('rev-smtp-to-def-format');
+    rstd.addEventListener('click', () => {
+      $.ajax({
+        type: "GET",
+        url: "/rev-smtp-to-def-format",
+        success: (response) => {
+          location.reload();
+        }
+      });
+    });
+
+    const showPasswordCheckbox = document.getElementById('show-password-checkbox');
+    const passwordInput = document.getElementById('password-input');
+    
+    showPasswordCheckbox.addEventListener('change', () => {
+      if (showPasswordCheckbox.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+
+
+    $("#update-smtp-btn").on("click", function(event) {
+      data_og = {
+        smtp_server_address : "{{ssa}}",
+        smtp_server_email : "{{sse}}",
+        smtp_server_port : "{{ssport}}",
+        smtp_server_password : "{{sspass}}",
+      };
+      userdata = {
+        smtp_server_address : $("#add-inp").val(),
+        smtp_server_email : $("#email-inp").val(),
+        smtp_server_port : $("#port-inp").val(),
+        smtp_server_password : $("#password-input").val(),
+      };
+      if (JSON.stringify(data_og) != JSON.stringify(userdata)) {
+        console.log(userdata);
+        console.log(data_og);
+        $.ajax({
+            type: "POST",
+            url: "/update-smtp",
+            data: userdata,
+            success: (response) => {
+              location.reload();
+            }
+            
+        }); 
+      }
+    });
+
+
+      var input = document.getElementById("name-input");
+      var pvmdesc = document.getElementById("pvm-desc");
+      input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          fname = document.getElementById("name-input").value;
+          if (fname != "") {
+            input.style.display = "none";
+            document.getElementById("f-name").innerHTML += fname;
+  
+            formData = {
+              full_name : fname,
+            };
+  
+            $.ajax({
+              type: "POST",
+              url: "/setfullname",
+              data: formData,
+              success: (response) => {
+                console.log(response);
+              }
+            });
+  
+          }
+        }
+      });
+    </script>
+  
+  </body>
+  
+{% endblock content %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Logging{% endblock title %}
+
+{% block bcpage %}Log{% endblock bcpage %}
+
+{% block content %}
+
+
+<div class="stats">
+    <div class="stats-one">
+
+        <div class="msg-cnt">Total Files Printed</div>
+
+        <div class="msg-num">{{total_printed}}</div>
+    
+    </div>
+    <div class="stats-two">
+
+        <div class="msg-cnt">Average Duration</div>
+
+        <div class="msg-num" style="font-size: 38px;">{{average_print_time}}</div>
+    
+    </div>
+    <div class="stats-three">
+
+        <div class="msg-cnt">Most Popular User</div>
+
+        <div class="msg-num" style="font-size: 20px;">{{most_popular_user}}</div>
+    
+    </div>
+    <div class="stats-four">
+
+        <div class="msg-cnt">Average Jobs / day</div>
+
+        <div class="msg-num" style="font-size: 40px;">{{average_atpd}}</div>
+    
+    </div>
+</div>
+
+
+
+<div class="log-table-cnt">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sender</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Request Time</th>
+            <th scope="col">Total Attachments</th>
+            <th scope="col">Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in print_data %}
+            <tr>
+                <th scope="row"><a href="mailto:{{row[0]}}" style="text-decoration: none; color: #cacaca;">{{row[0]}}</a></th> 
+                <th scope="row">{{row[1]}}</th> 
+                <th scope="row">{{row[2]}}</th> 
+                <th scope="row">{{row[3]}}</th> 
+                <th scope="row">{{row[4]}}</th>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEMAIL" aria-labelledby="offcanvasEMAILLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSETLabel">Email Log</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        <input type="email" class="email-log" id="email-log" placeholder="kushagra.rigel@gmail.com"><br><br>
+        <button class="btn btn-primary email-log-btn" id="emails-log">Email</button>
+      </div>
+    </div>
+</div>
+
+
+
+<div class="btn-groups">
+    <a href="/all-user-data" target="_blank" class="btn btn-success log-btn-grps">
+        All user Data
+    </a>
+    <a class="btn btn-primary log-btn-grps" data-bs-toggle="offcanvas" href="#offcanvasEMAIL" role="button" aria-controls="offcanvasEMAIL">
+        Email Log
+    </a>
+    <a href="/download-log" target="_blank" class="btn btn-primary log-btn-grps">
+        Download Log
+    </a>
+    <a href="/reset-log" class="btn btn-danger log-btn-grps reset-log">
+        Reset Log
+    </a>
+    
+</div>
+
+<script>
+    $("#emails-log").click(function(){
+        var email = $("#email-log").val();
+        $.ajax({
+            url: "/email-log",
+            type: "POST",
+            data: {
+                email: email
+            },
+            success: function(data){
+              window.location.reload();
+            }
+        })
+    })
+</script>
+
+{% endblock content %}

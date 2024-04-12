@@ -1,0 +1,69 @@
+<head>
+	<title>File Types</title>
+	<style type="text/css">
+		body {
+			background-color: #1e1e1e;
+			color: #cacaca;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+			box-sizing: border-box;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+		}
+		.button {
+			display: inline-block;
+			padding: 10px 20px;
+			margin: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #007bff;
+			color: #ffffff;
+			text-align: center;
+			text-decoration: none;
+			font-size: 20px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		.button:hover {
+			background-color: #0062cc;
+		}
+		.data {
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #ffffff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			font-size: 18px;
+			line-height: 1.5;
+			min-height: 200px;
+			overflow: auto;
+			width: 100%;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<button class="button" onclick="getData('json')">JSON</button>
+		<button class="button" onclick="getData('csv')">CSV</button>
+		<button class="button" onclick="getData('txt')">Text</button>
+		<div class="data" id="data-div"></div>
+	</div>
+	<script type="text/javascript">
+		function getData(type) {
+			// Replace this with your code to get data in the selected format
+			var data = 'Data in ' + type.toUpperCase() + ' format';
+			document.getElementById('data-div').innerHTML = data;
+		}
+	</script>
+</body>

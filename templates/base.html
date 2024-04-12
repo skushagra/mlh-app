@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Mail Printer - {% block title %}{% endblock title %}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config Assistant dev-2023.01</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRegister" aria-labelledby="offcanvasRegisterLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSETLabel">Register User</h5>
+    <button type="button" class="btn-close" data-bs-toggle="offcanvas" href="#offcanvasSET" role="button" aria-controls="offcanvasSET" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <input type="text" name="" class="reg-user-inputs" placeholder="Full Name"><br><br>
+    <input type="text" name="" class="reg-user-inputs" placeholder="User Email"><br>
+    <button class="sett-user-btn" id="reg-user-btn">Register User</button>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasBlock" aria-labelledby="offcanvasBlockLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSETLabel">Block User</h5>
+    <button type="button" class="btn-close" data-bs-toggle="offcanvas" href="#offcanvasSET" role="button" aria-controls="offcanvasSET" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <input type="text" id="block-user-input" name="" class="reg-user-inputs" placeholder="User Email"><br>
+    <button class="sett-user-btn" id="block-user-btn">Block User</button>
+    <br><br><br>
+    <h5 style="font-weight: 800;">Blocked users</h5>
+    <ul>
+      <li><code>Can send mails to your mail address</code></li>
+      <li><code>Cannot print using Web Mail Printer</code></li>
+      <li><code>Will be blocked even if registered</code></li>
+
+    </ul>
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSET" aria-labelledby="offcanvasSETLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasSETLabel">Settings</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <h5 style="font-weight: 800;">Update & Install</h5>
+      <code>We check for updates online and automatically install and update the Web Mail Printer.</code><br><br>
+      <p class="intro_decs">
+        Check for Updates &nbsp;&nbsp;
+        <a id="check-updates" class="btn btn-success update-smtp-btn" style="width: max-content; height: max-content;">Check Now</a>
+      </p>
+
+      <p class="intro_decs">
+        Auto Update
+        <label class="toggle-switch">
+          <input id="sun" type="checkbox" checked disabled>
+          <span class="toggle-switch-slider"></span>
+        </label>
+        <code>(Auto update control will come in fututre updates.)</code>
+      </p>
+      <br><br><br>
+      <!-- <p class="intro_decs" style="font-size: 18px;">
+        Registered Users &nbsp;&nbsp; <a data-bs-toggle="offcanvas" href="#offcanvasRegister" role="button" aria-controls="offcanvasRegister" class="btn btn-success update-smtp-btn" style="width: max-content; height: max-content;">Register User</a>
+      </p>
+      <br><br><br>
+      <p class="intro_decs" style="font-size: 18px;">
+        Blocked Users &nbsp;&nbsp; <a data-bs-toggle="offcanvas" href="#offcanvasBlock" role="button" aria-controls="offcanvasBlock" class="btn btn-success update-smtp-btn" style="width: max-content; height: max-content;">Block User</a>
+      </p> -->
+      <!-- <br><br><br> -->
+
+      <h5 style="font-weight: 800;">Report an Issue</h5>
+      <p class="intro_decs">
+      You can report an issue on our
+      <a style=" color:#c9ae79; text-decoration: none;"  href="https://sites.google.com/view/webmailprinter/">Website</a>
+       or
+      <a href="https://github.com/skushagra/pvm" style=" color:#c9ae79; text-decoration: none;">Github</a> page.<br><br>Please attach the log file with the issue report. You can download the log file from <a href="/report-issue-log" style=" color:#c9ae79; text-decoration: none;">here</a>.
+      </p>
+
+    </div>
+
+    
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCSS" aria-labelledby="offcanvasCSSLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasCSSLabel">Webpage CSS | JS</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <style style="display: block; font-family: monospace; white-space: pre;">
+        {{css|safe}}
+      </style>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<body>
+    <div class="webnav">
+        <a class="title" id="home" style="text-decoration: none; color: #cacaca;" href="/">Web Mail Printer</a>
+        <span class="menu-items">
+          <a class="item" href="/imap" id="IMAP">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-inboxes" viewBox="0 0 16 16">
+              <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562A.5.5 0 0 0 1.884 9h12.234a.5.5 0 0 0 .496-.438L14.933 6zM3.809.563A1.5 1.5 0 0 1 4.981 0h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393zm.941.83.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438l.32-2.562H10.45a2.5 2.5 0 0 1-4.9 0H1.066z"/>
+            </svg>
+          </a>
+          <a class="item" href="/smtp" id="SMTP">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-envelope-check" viewBox="0 0 16 16">
+              <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+              <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+            </svg>
+          </a>
+          <a class="item" href="/log" id="log">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-journal-album" viewBox="0 0 16 16">
+              <path d="M5.5 4a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5h-5zm1 7a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </a>
+          <a class="item" href="/dbece" id="verify">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-database-check" viewBox="0 0 16 16">
+              <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+              <path d="M12.096 6.223A4.92 4.92 0 0 0 13 5.698V7c0 .289-.213.654-.753 1.007a4.493 4.493 0 0 1 1.753.25V4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16c.536 0 1.058-.034 1.555-.097a4.525 4.525 0 0 1-.813-.927C8.5 14.992 8.252 15 8 15c-1.464 0-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13h.027a4.552 4.552 0 0 1 0-1H8c-1.464 0-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10c.262 0 .52-.008.774-.024a4.525 4.525 0 0 1 1.102-1.132C9.298 8.944 8.666 9 8 9c-1.464 0-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777ZM3 4c0-.374.356-.875 1.318-1.313C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4Z"/>
+            </svg>
+          </a>
+          <a class="item" id="settings" data-bs-toggle="offcanvas" href="#offcanvasSET" role="button" aria-controls="offcanvasSET">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+            </svg>
+          </a>
+          <!-- <a class="item" id="css-edit" data-bs-toggle="offcanvas" href="#offcanvasCSS" role="button" aria-controls="offcanvasCSS">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+          </a> -->
+        </span>
+      </div>
+
+      <div class="bc">
+        <div class="homepage"><a href="/" class="bctext">Home </a>/  <a href="{{page_name}}" class="bctext">{% block bcpage %}{% endblock bcpage %}</a> </div>
+      </div>
+
+      <script>
+        // document.onkeydown = function (e) {
+        //   if (e['key'] == 'i' || e['key'] == 'I'){
+        //     window.location.href = "/imap";
+        //   }
+        //   if (e['key'] == 'm' || e['key'] == 'M'){
+        //     window.location.href = "/smtp";
+        //   }
+        //   if (e['key'] == 'l' || e['key'] == 'L'){
+        //     window.location.href = "/log";
+        //   }
+        //   if (e['key'] == 'd' || e['key'] == 'D'){
+        //     window.location.href = "/dbece";
+        //   }
+        //   if (e['key'] == 'h' || e['key'] == 'H'){
+        //     window.location.href = "/";
+        //   }
+        //   if (e['key'] == 's' || e['key'] == 'S'){
+        //     $('#offcanvasSET').offcanvas('toggle')
+        //   }
+        // };
+
+
+        $("#block-user-btn").click(() => {
+          if ($("#block-user-input").val() == "") {
+            alert("Please enter a email!");
+            return;
+          }
+          $.ajax({
+            url: "/block-user",
+            type: "POST",
+            data: {
+              username: $("#block-user-input").val()
+            },
+            success: function (data) {
+              if (data == "Success") {
+                alert("User blocked!");
+                window.location.reload();
+              } else if (data == "Already Blocked") {
+                alert("User already blocked!");
+              }
+               else {
+                alert("User could not blocked!");
+              }
+            },
+            error: function (data) {
+              alert("Error while blocking user!");
+            }
+          });
+        });
+
+        $("#check-updates").click(() => {
+          $.ajax({
+            url: "/check-for-updates",
+            type: "GET",
+            success: function (data) {
+              if (data == "True") {
+                alert("Update available! Your application will be updated automatically.");
+              } else {
+                alert("No updates available!");
+              }
+            },
+            error: function (data) {
+              alert("Update failed!");
+            }
+          });
+        });
+      </script>
+
+      {% block content %}{% endblock content %}
+</body>
+</html>

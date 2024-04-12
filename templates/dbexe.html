@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}DB Access{% endblock title %}
+{% block bcpage %}DB Access{% endblock bcpage %}
+
+{% block content %}
+    <div class="pac">Principal Access Control</div>
+
+    <div class="pac-desc"> Principal Access Control (PAC) is a mechanism for controlling access to resources in Active Directory. It is a powerful tool that can be used to control access to resources based on the user's group membership, the user's location, the time of day, and more.</div>
+    
+    <div class="pmcontrol-1">
+        <div class="pmc">
+            Print Mail Content &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if pmc == "True" %}
+                <label class="toggle-switch">
+                    <input id="pmc-bool" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% else %}
+                <label class="toggle-switch">
+                    <input id="pmc-bool" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% endif %}         
+        </div>
+
+        <div class="pmc">
+            Print Mail Attachments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if pma == "True" %}
+                <label class="toggle-switch">
+                    <input id="pma-bool" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% else %}
+                <label class="toggle-switch">
+                    <input id="pma-bool" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% endif %}         
+        </div>
+    </div>
+
+    <div class="pmcontrol-1">
+        <div class="pmc">
+            Encryption Key &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="regen-key" class="btn regen">Generate New</a>          
+        </div>
+
+        <div class="pmc">
+            Send User Notification &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if scn == "True" %}
+                <label class="toggle-switch">
+                    <input id="sun-bool" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% else %}
+                <label class="toggle-switch">
+                    <input id="sun-bool" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% endif %}         
+        </div>
+    </div>
+
+
+    <div class="pmcontrol-1">
+        <div class="pmc">
+            Check Subject for Search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if csfs == "True" %}
+                <label class="toggle-switch">
+                    <input id="csfs" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% else %}
+                <label class="toggle-switch">
+                    <input id="csfs" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label> 
+            {% endif %}         
+        </div>
+        
+        <div class="pmc">
+            Send Diagonstic Data &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {% if uhd == "True" %}
+                <label class="toggle-switch">
+                    <input id="sdd" type="checkbox" checked>
+                    <span class="toggle-switch-slider"></span>
+                </label>
+            {% else %}
+                <label class="toggle-switch">
+                    <input id="sdd" type="checkbox">
+                    <span class="toggle-switch-slider"></span>
+                </label>
+            {% endif %}          
+        </div>
+        
+
+    </div>
+    
+    <div class="pmcontrol-1">
+        <div class="pmc-1">
+            <div class="help-text">Subject for Search</div>
+            <input type="text" id="sfs" class="md-input md-input-sfs" placeholder="Subject for Search" value="{{sfs}}">
+        </div>
+        <div class="pmc-1">
+            <div class="help-text">Media Storage Directory</div>
+            <input type="text" id="msd" class="md-input md-input-msd" placeholder="Media Storage Directory" value="{{pmd}}">
+        </div>
+    </div>
+
+
+    <script>
+
+        $("#pmc-bool").on("change", function(){
+            var pmc = $(this).val();
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "pmc",
+                    updater: "{{pmc}}"
+                },
+                success: function(data){
+                    
+                }
+            });
+        });
+
+        $("#pma-bool").on("change", function(){
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "pma",
+                    updater: "{{pma}}"
+                },
+                success: function(data){
+                    
+                }
+            });
+        });
+
+        $("#sfs").on("change", function(){
+            var sfs = $(this).val();
+            console.log(sfs);
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "sfs",
+                    updater: sfs
+                },
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        });
+
+
+        $("#msd").on("change", function(){
+            var msd = $(this).val();
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "msd",
+                    updater: msd
+                },
+                success: function(data){
+                }
+            });
+        });
+
+        $("#sdd").on("change", function(){
+            var sdd = $(this).val();
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "sdd",
+                    updater: "{{uhd}}"
+                },
+                success: function(data){
+                }
+            });
+        });
+
+        $("#csfs").on("change", function(){
+            var csfs = $(this).val();
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "csfs",
+                    updater: "{{csfs}}"
+                },
+                success: function(data){
+                }
+            });
+        });
+
+        $("#sun-bool").on("change", function(){
+            var sun = $(this).val();
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "sun",
+                    updater: "{{scn}}"
+                },
+                success: function(data){
+                }
+            });
+        });
+
+        $("#regen-key").on("click", function(){
+            console.log("regen-key");
+            $.ajax({
+                url: "/dbexe-update",
+                type: "POST",
+                data: {
+                    changing : "rk",
+                    updater: "rk"
+                },
+                success: function(data){
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

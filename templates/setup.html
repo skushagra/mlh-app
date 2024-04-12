@@ -1,0 +1,172 @@
+{% extends 'setup-base.html' %}
+{% block title %}Initial Setup{% endblock title %}
+
+{% block content %}
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCompleteSetup" aria-labelledby="offcanvasCompleteSetupLabel" style="width: max-content;">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Accept Terms of Use</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+          <p style="font-size: 13px; text-align: justify;">Finally, you must accept the Terms of Use to complete the setup.</p>
+
+          <ul>
+            <li class="li-item">I have read and accept the <a class="policy-acceptance" href="https://sites.google.com/view/webmailprinter/terms-of-use/terms-of-conditions">Terms and Conditions</a></li>
+            <li class="li-item">I have read and accept the <a class="policy-acceptance" href="https://sites.google.com/view/webmailprinter/terms-of-use/privacy-policy">Privacy Policy</a></li>
+            <li class="li-item">I have read and accept the <a class="policy-acceptance" href="https://sites.google.com/view/webmailprinter/terms-of-use/license">End User License Aggrement</a></li>
+          </ul>
+
+          <input type="checkbox" id="accept-policy">
+          <label for="accept-policy" style="font-size: 15px;">&nbsp; I have completed all the above tasks and hereby accept to comply with the products Terms of Use.</label>
+          <br><br>
+          <a class="bs-btn" id="complete-setup">Lets Go!</a>
+      </div>
+    </div>
+  </div>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasBeginSetup" aria-labelledby="offcanvasBeginSetupLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Begin Setup</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+        <p style="font-size: 13px; text-align: justify;">Fill out the required fields below to begin the setup process. Fill then carefully as you will not be able to edit then later.</p>
+
+        <input type="text" class="f-name-input" id="f-name-input" placeholder="Fullname">
+        <br><br><br>
+        <input type="email" class="email-input" id="email-input" placeholder="Email Address">
+        <br><br><br>
+        <a class="bs-btn" id="verify-user">Verify</a>
+        
+        <div id="next-steps" style="display: none;">
+            <br>
+            <p style="font-size: 13px;">Enter the OTP sent to your email address.</p>
+            <input type="number" class="email-input" id="user-otp" placeholder="OTP">
+            <br><br>
+            <a class="bs-btn" id="validate-user">Validate</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="intro_cnt">
+    <h3 class="init-setup">Initial Setup</h3>
+
+    <p class="intro_desc">
+        In order to use the application, you must first set it up. The web mail printer connects to various servers online to function correctly and requires an active internet connection to work. The setup process will guide you through the steps required to get the application up and running.
+        The basic requirements for the application are:
+        <ul class="req-list">
+            <li><code>Active internet connection</code></li>
+            <li><code>Compliance with the Terms and Conditions</code></li>
+            <li><code>Sharing of Usage Statistics (for developer version)</code></li>
+        </ul>
+        <br>
+        <span class="internet-status" id="internet-status"></span>
+        <a class="bs-btn" data-bs-toggle="offcanvas" href="#offcanvasBeginSetup" role="button" aria-controls="offcanvasBeginSetup" id="begin-setup">Begin Setup</a>
+    </p>
+    
+    <div class="setup_station">
+    </div>
+
+    <script>
+        let uemail = "";
+        check_connectivity();
+        function check_connectivity() {
+            check = navigator.onLine
+            if (check != true){
+                 document.getElementById("begin-setup").style.display = "none";
+                 document.getElementById("internet-status").innerHTML = "<code>You are not connected to the internet. Please connect to the internet and try again.</code>";
+            }
+        }
+        
+
+        $("#complete-setup").click(() => {
+            if (document.getElementById("accept-policy").checked) {
+                $.ajax({
+                    url: '/verify-user',
+                    type: 'POST',
+                    data: {
+                        'phase': 'phase3',
+                        'accepted': true,
+                    },
+                    success: () => {
+                        window.location.reload();
+                    },
+                });
+            } else {
+                alert("Accept the terms of use by checking the box.")
+            }
+        });
+
+        $("#validate-user").click(() => {
+            $("#validate-user").html("Validating...");
+            let otp = $("#user-otp").val();
+            
+            $.ajax({
+                url: "/verify-user",
+                type: "POST",
+                data: {
+                    phase: "phase2",
+                    otp: otp,
+                    email: uemail
+                },
+                success: (data) => {
+                    if (data == "success") {
+                        $("#next-steps").html(`
+                        <br>
+                        <p style="font-size: 15px;">Verified Successfully</p>
+                        <br>
+                        <a class="bs-btn" id="agree-tnc" data-bs-toggle="offcanvas" href="#offcanvasCompleteSetup" role="button" aria-controls="offcanvasCompleteSetup">Proceed</a>
+                        `)
+                    } else {
+                        $("#validate-user").html("Validate");
+                        alert("Invalid OTP.");
+                    }
+                }
+            });
+
+        });
+
+        $("#verify-user").click(() => {
+            $("#verify-user").html("Verifying...");
+            let fullname = $("#f-name-input").val();
+            let email = $("#email-input").val();
+            var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+            if (fullname == "" || email == "") {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            if (!validRegex.test(email)) {
+                alert("Invalid email address.");
+                return;
+            }
+
+            $.ajax({
+                url: "/verify-user",
+                type: "POST",
+                data: {
+                    phase: "phase1",
+                    fullname: fullname,
+                    email: email
+                },
+                success: (data) => {
+                    if (data['status'] == "success") {
+                        document.getElementById("verify-user").style.display = "none";
+                        document.getElementById("next-steps").style.display = "block";
+                        uemail = data['email'];
+                    } else {
+                        alert("Invalid user details.");
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock content %}

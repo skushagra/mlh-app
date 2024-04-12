@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}IMAP Settings{% endblock title %}
+
+{% block bcpage %}IMAP{% endblock bcpage %}
+
+
+{% block content %}
+<body>
+
+
+  <div class="intro">
+
+    <h3>IMAP server settings</h3>
+    <br>
+    <p class="intro-desc">
+    Web Mail Printer connects to your email providers IMAP server and fetches your emails based on user generated rules.<br>
+    Below are the <code>server</code>, <code>email</code> and <code>password</code> for your IMAP server. You can update these settings by entering new values and clicking the update button.
+    <br><br>
+    
+    </p>
+    <br>
+
+    <div class="form-cnt">
+      <div class="address-cnt">
+        <input type="text" class="address-input" id="add-inp" placeholder="IMAP Server Address" value="{{isa}}">
+      </div>
+      <br><br>
+  
+      <div class="email-cnt">
+        <input type="text" class="mail-input" id="mail-inp" placeholder="IMAP Server Email" value="{{ise}}">
+      </div>
+      <br><br>
+  
+      <div class="password-cnt">
+        <input class="password-input" type="password" value="{{isp}}" id="password-input" placeholder="IMAP Password"><br>
+        <label class="show-pass-cnt">
+          <input type="checkbox" id="show-password-checkbox">&nbsp;&nbsp;&nbsp;
+          Show Password
+        </label>
+      </div>
+  
+      <br><br>
+  
+      <button class="btn btn-success update-imap-btn" id="upd-imap-btn">Update IMAP</button>
+    </div>
+    
+    <br><br><br><br>
+
+  </div>
+
+  <script>
+
+    const showPasswordCheckbox = document.getElementById('show-password-checkbox');
+    const passwordInput = document.getElementById('password-input');
+    
+    showPasswordCheckbox.addEventListener('change', () => {
+      if (showPasswordCheckbox.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+
+
+    $("#upd-imap-btn").on("click", function(event) {
+      data_og = {
+        imap_server_address : "{{isa}}",
+        imap_server_email : "{{ise}}",
+        imap_server_password : "{{isp}}",
+      };
+      userdata = {
+        imap_server_address : $("#add-inp").val(),
+        imap_server_email : $("#mail-inp").val(),
+        imap_server_password : $("#password-input").val(),
+      };
+      if (JSON.stringify(data_og) != JSON.stringify(userdata)) {
+        $.ajax({
+            type: "POST",
+            url: "/update-imap",
+            data: userdata,
+            success: (response) => {
+              location.reload();
+            }
+            
+        }); 
+      }
+    });
+
+
+
+
+    var input = document.getElementById("name-input");
+    var pvmdesc = document.getElementById("pvm-desc");
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        fname = document.getElementById("name-input").value;
+        if (fname != "") {
+          input.style.display = "none";
+          document.getElementById("f-name").innerHTML += fname;
+
+          formData = {
+            full_name : fname,
+          };
+
+          $.ajax({
+            type: "POST",
+            url: "/setfullname",
+            data: formData,
+            success: (response) => {
+              console.log(response);
+            }
+          });
+
+        }
+      }
+    });
+  </script>
+
+</body>
+{% endblock content %}
